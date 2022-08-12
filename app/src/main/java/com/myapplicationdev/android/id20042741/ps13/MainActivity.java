@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         client = new AsyncHttpClient();
         populateListView("");
+
         addressQuery.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -53,13 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     public void populateListView(String query) {
-        al_vac_location = new ArrayList<>();
         Log.i("debug", query);
+        al_vac_location = new ArrayList<>();
         String url = String.format("https://data.gov.sg/api/action/datastore_search?resource_id=f179cb8a-20ad-4c91-b990-e315ed383018&%s", query);
         client.get(url, new JsonHttpResponseHandler() {
             String location;
@@ -77,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
                     JSONObject jsonVaccineData = response.getJSONObject("result");
                     JSONArray jsonArrRecords = jsonVaccineData.getJSONArray("records");
-                    Log.i("debug", String.valueOf(jsonArrRecords.length()));
 
                     for (int i = 0; i < jsonArrRecords.length(); i++) {
                         JSONObject jsonObjRecords = jsonArrRecords.getJSONObject(i);
